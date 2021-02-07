@@ -2,6 +2,7 @@ package com.gailitis.rest_cars.csv_utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -43,38 +44,15 @@ public class CSVMappedToCars {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    private void revert() throws InterruptedException {
+    private void revert() throws InterruptedException, IOException {
         carMapper = new CarMapper();
 
         for (CarFromCSV csvCar: carList
              ) {
-//            Car car = new Car(csvCar.getId(), csvCar.getBrand(), csvCar.getPurchaseDate(), csvCar.getColor());
             Car car = carMapper.fromCarFromCSVToCar(csvCar);
-//            cars.addCar(carMapper.fromCarFromCSVToCar(csvCar));
-            Cars.getInstance().addCar(car);
-//            cars.addCar(car);
-
+            Cars.getInstance().uploadData(car);
         }
-//        Car car = carMapper.fromCarFromCSVToCar(carFromCSV);
-//        cars.addCar(car);
     }
-
-
-//    @SuppressWarnings({"rawtypes", "unchecked"})
-//    public static void main(String[] args) throws Exception
-//    {
-//        CsvToBean csv = new CsvToBean();
-//
-//        String csvFilename = "src\\main\\resources\\data_source\\samochody.csv";
-//        CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
-//
-//        //Set column mapping strategy
-//        List listOfCars = csv.parse(setColumnMapping(), csvReader);
-//        for (Object object : listOfCars) {
-//            CarFromCSV carFromCSV = (CarFromCSV) object;
-//            System.out.println(carFromCSV);
-//        }
-//    }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private static ColumnPositionMappingStrategy setColumnMapping()
