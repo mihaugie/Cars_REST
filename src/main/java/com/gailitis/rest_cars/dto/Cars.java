@@ -18,18 +18,31 @@ public class Cars {
 
     private List<Car> carList = new ArrayList<>();
 
-    public void addCar(Car car) {
-        carList.add(car);
-    }
-
-    public static Cars getInstance(){
+    public static Cars getInstance() {
         if (instance == null) {
             instance = new Cars();
         }
         return instance;
     }
 
+    public Car addCar(Car car) {
+        carList.add(car);
+        return car;
+    }
+
     public List<Car> getCarList() {
         return carList;
+    }
+
+    public Car getCarById(int id) {
+        return carList.get(id);
+    }
+
+    public boolean removeCarById(Car car) {
+        return carList.remove(car);
+    }
+
+    public Car updateCar(int id, Car car){
+         return carList.set(id, car);
     }
 }

@@ -3,7 +3,6 @@ package com.gailitis.rest_cars.csv_utils;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
@@ -33,16 +32,14 @@ public class CSVMappedToCars {
     public void loadDataFromCSV() throws FileNotFoundException {
         CsvToBean csv = new CsvToBean();
 
-        String csvFilename = "src\\main\\resources\\data_source\\samochody.csv";
+        String csvFilename = CsvConsts.DATA_FILE_PATH;
         CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
 
         carList = csv.parse(setColumnMapping(), csvReader);
         for (Object object : carList) {
-
             CarFromCSV carFromCSV = (CarFromCSV) object;
             System.out.println(carFromCSV);
         }
-
     }
 
     @EventListener(ApplicationReadyEvent.class)

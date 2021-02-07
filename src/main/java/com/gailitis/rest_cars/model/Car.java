@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 public class Car implements Serializable {
 //    private static final long serialVersionUID = 1L;
 
+    @Id
     private int id;
     private String brand;
     private String purchaseDate;
