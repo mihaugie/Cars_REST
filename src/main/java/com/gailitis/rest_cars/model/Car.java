@@ -1,11 +1,8 @@
 package com.gailitis.rest_cars.model;
 
-import com.opencsv.bean.CsvBindAndJoinByPosition;
 import com.opencsv.bean.CsvBindByPosition;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;

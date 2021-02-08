@@ -1,5 +1,6 @@
 package com.gailitis.rest_cars.services;
 
+import com.gailitis.rest_cars.csv_utils.CSVReaderTool2;
 import com.gailitis.rest_cars.dto.Cars;
 import com.gailitis.rest_cars.model.Car;
 import com.google.common.collect.Iterables;
@@ -17,6 +18,8 @@ import java.util.Optional;
 @Transactional
 @Service
 public class CarService {
+
+    CSVReaderTool2 csvReaderTool = new CSVReaderTool2();
 
     public List<Car> getAllCars() {
         return Cars.getInstance().getCarList();
@@ -54,5 +57,8 @@ public class CarService {
         return Cars.getInstance().updateCar(Cars.getInstance().getCarList().indexOf(carToBeUpdated), carToBeUpdated);
     }
 
+    public void appendData(String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+        csvReaderTool.uploadData(color);
+    }
 
 }
