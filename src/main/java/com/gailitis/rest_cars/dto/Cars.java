@@ -17,8 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cars {
-    private static Cars instance;
 
+    private static Cars instance;
     private List<Car> carList = new ArrayList<>();
     private CsvUpdater csvUpdater = new CsvUpdater();
     private CsvWriterTool csvWriterTool = new CsvWriterTool();
@@ -41,20 +41,24 @@ public class Cars {
         return car;
     }
 
+    public Car uploadCar(Car car) {
+        carList.add(car);
+        return car;
+    }
+
     public List<Car> getCarList() {
         return carList;
     }
 
-    public boolean removeCarById(Car car) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, InterruptedException {
+    public boolean removeCarById(Car car) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         csvUpdater.removeCarFromCsv(car);
         csvWriterTool.updateCsvFile();
         return carList.remove(car);
     }
 
-    public Car updateCar(int id, Car car) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException, InterruptedException {
+    public Car updateCar(int id, Car car) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException {
         Car updatedCar = carList.set(id, car);
         csvWriterTool.updateCsvFile();
         return updatedCar;
-
     }
 }

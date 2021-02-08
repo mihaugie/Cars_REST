@@ -44,4 +44,10 @@ public class CarController {
     public Car update(@PathVariable int id, @RequestBody Car car) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException, InterruptedException {
         return carService.updateCar(id, car);
     }
+
+    @PostMapping("/upload/{color}")
+    public void appendData(@PathVariable String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+        carService.appendData(color);
+    }
+
 }

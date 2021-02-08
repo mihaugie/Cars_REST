@@ -6,7 +6,6 @@ import com.gailitis.rest_cars.model.Car;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,31 +15,22 @@ import java.util.List;
 @Transactional
 public class CsvUpdater {
     String csvFilePath = CsvConsts.DATA_FILE_PATH;
+
     public void addNewCarToCsv(Car car) throws IOException {
 
-
         CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath, true));
-
         String carToCsv = car.getId() + "," + car.getBrand() + "," + car.getPurchaseDate() + "," + car.getColor();
-
         String [] record = carToCsv.split(",");
-
         writer.writeNext(record);
-
         writer.close();
     }
 
     public void updateCsvFile(Car car) throws IOException {
 
-
         CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath));
-
         String carToCsv = car.getId() + "," + car.getBrand() + "," + car.getPurchaseDate() + "," + car.getColor();
-
         String [] record = carToCsv.split(",");
-
         writer.writeNext(record);
-
         writer.close();
     }
 
@@ -53,6 +43,4 @@ public class CsvUpdater {
         writer.writeAll(allElements);
         writer.close();
     }
-
-
 }
