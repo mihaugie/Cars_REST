@@ -39,7 +39,6 @@ public class CarController {
         return carService.removeCarById(id);
     }
 
-
     @PutMapping("/update/{id}")
     public Car update(@PathVariable int id, @RequestBody Car car) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException, InterruptedException {
         return carService.updateCar(id, car);

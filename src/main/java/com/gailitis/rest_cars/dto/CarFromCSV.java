@@ -1,9 +1,6 @@
 package com.gailitis.rest_cars.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;

@@ -28,10 +28,10 @@ public class CSVReaderTool2 {
     private final CsvWriterTool csvWriterTool;
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public List<Car> uploadData(String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    public List<Car> uploadData(String color) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         CsvToBean csv = new CsvToBean();
 
-        String csvFilename = CsvConsts.DATA_FILE_TO_UPLOAD_PATH;
+        String csvFilename = CsvConsts.DATA_FILE_TO_UPLOAD_WITH_COLOR_FILTER_PATH;
         CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
 
         carList = csv.parse(setColumnMapping(), csvReader);
@@ -41,7 +41,7 @@ public class CSVReaderTool2 {
         return revert(color);
     }
 
-    private List<Car> revert(String color) throws InterruptedException, IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    private List<Car> revert(String color) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         for (CarFromCSV csvCar: carList
         ) {
             if (csvCar.getColor().equals(color)){
