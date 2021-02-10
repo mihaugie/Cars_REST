@@ -10,6 +10,9 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -17,7 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+@Component
+@Data
 public class CsvWriterTool {
+
+    private final Cars cars;
 
     public void updateCsvFile() throws IOException,
             CsvDataTypeMismatchException,
@@ -33,7 +40,7 @@ public class CsvWriterTool {
                     .withMappingStrategy(mappingStrategy)
                     .build();
 
-            List<Car> carList = Cars.getInstance().getCarList();
+            List<Car> carList = cars.getCarList();
             beanToCsv.write(carList);
             writer.close();
         }

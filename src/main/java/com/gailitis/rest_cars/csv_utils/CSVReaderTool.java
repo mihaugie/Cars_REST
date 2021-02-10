@@ -8,6 +8,9 @@ import com.gailitis.rest_cars.dto.Cars;
 import com.gailitis.rest_cars.model.Car;
 import com.gailitis.rest_cars.services.CarMapper;
 import com.opencsv.bean.CsvToBeanBuilder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -19,11 +22,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 public class CSVReaderTool {
 
-    private Cars cars;
+    private final Cars cars;
     private CarMapper carMapper;
-    private List<CarFromCSV> carList;
+    private final List<CarFromCSV> carList;
 
     public List<Car> readCSV(String color) throws FileNotFoundException {
 
@@ -37,7 +41,7 @@ public class CSVReaderTool {
                 .filter(p -> p.getColor() == color)
                 .collect(Collectors.toList());
 
-        Cars.getInstance().getCarList().addAll(listOfFilteredCars);
+        cars.getCarList().addAll(listOfFilteredCars);
 
         beans.forEach(System.out::println);
         return beans;
@@ -66,7 +70,7 @@ public class CSVReaderTool {
         for (CarFromCSV csvCar: carList
         ) {
             Car car = carMapper.fromCarFromCSVToCar(csvCar);
-            Cars.getInstance().uploadData(car);
+            cars.uploadData(car);
         }
     }
 

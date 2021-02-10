@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@RequiredArgsConstructor
+@Data
 public class CarMapper {
 
     public Car fromCarFromCSVToCar(final CarFromCSV carFromCSV) {

@@ -3,6 +3,7 @@ package com.gailitis.rest_cars.csv_utils;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.gailitis.rest_cars.model.Car;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Component
 @Transactional
+@Data
 public class CsvUpdater {
     String csvFilePath = CsvConsts.DATA_FILE_PATH;
 

@@ -10,17 +10,23 @@ import com.gailitis.rest_cars.services.CarMapper;
 import com.google.common.collect.Iterables;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Data
 public class CSVReaderTool2 {
 
-    private Cars cars;
-    private CarMapper carMapper;
-    private List<CarFromCSV> carList;
-    private CsvWriterTool csvWriterTool = new CsvWriterTool();
+    private final Cars cars;
+    private final CarMapper carMapper;
+    private List<CarFromCSV> carList = new ArrayList<>();
+    private final CsvWriterTool csvWriterTool;
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Car> uploadData(String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
@@ -37,20 +43,20 @@ public class CSVReaderTool2 {
     }
 
     private List<Car> revert(String color) throws InterruptedException, IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        carMapper = new CarMapper();
+//        carMapper = new CarMapper();
 
 //        Cars.getInstance().getCarList().addAll(listOfFilteredCars);
         for (CarFromCSV csvCar: carList
         ) {
             if (csvCar.getColor().equals(color)){
                 Car car = carMapper.fromCarFromCSVToCar(csvCar);
-                car.setId(Iterables.getLast(Cars.getInstance().getCarList()).getId() + 1);
-                Cars.getInstance().uploadData(car);
+                car.setId(Iterables.getLast(cars.getCarList()).getId() + 1);
+                cars.uploadData(car);
             }
         }
         csvWriterTool.updateCsvFile();
 
-        return Cars.getInstance().getCarList();
+        return cars.getCarList();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
