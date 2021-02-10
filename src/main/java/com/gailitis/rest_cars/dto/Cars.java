@@ -54,8 +54,7 @@ public class Cars {
 
         String csvFilename = CsvConsts.DATA_FILE_PATH;
 
-//        CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
-        CSVReader csvReader = new CSVReader(new InputStreamReader(new FileInputStream(csvFilename), "UTF-8"));
+        CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
 
         csvCarList = csv.parse(setColumnMapping(), csvReader);
         for (int i = CsvConsts.FIRST_DATA_FILE_ROW_WITH_DATA-1; i < csvCarList.size(); i=i+CsvConsts.ITERATION_OF_ROWS_WITH_DATA_PARAM) {
