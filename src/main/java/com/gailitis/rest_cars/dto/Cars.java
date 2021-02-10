@@ -79,7 +79,6 @@ public class Cars {
     }
 
     public boolean removeCarById(Car car) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        carList.remove(car);
         updateCsvFile();
         return carList.remove(car);
     }

@@ -29,6 +29,7 @@ public class CarController {
     }
 
     @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
     public Car add(@RequestBody Car car) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
        return carService.addCar(car);
     }

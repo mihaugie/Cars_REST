@@ -7,12 +7,12 @@ import com.google.common.collect.Iterables;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Transactional
@@ -39,11 +39,11 @@ public class CarService {
     }
 
     public boolean removeCarById(int id) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, InterruptedException {
-        Optional<Car> carWithId = cars.getCarList().stream()
+        Car carWithId = cars.getCarList().stream()
                 .filter(car -> car.getId() == id)
-                .findFirst();
+                .findFirst().orElseThrow(() -> new NoSuchElementException("There is no such car in the system"));
 
-        return cars.removeCarById(carWithId.get());
+        return cars.removeCarById(carWithId);
     }
 
     public Car updateCar(int id, Car providedCar) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException, InterruptedException {
