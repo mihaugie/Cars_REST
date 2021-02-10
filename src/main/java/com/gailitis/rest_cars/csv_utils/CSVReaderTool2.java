@@ -11,7 +11,6 @@ import com.google.common.collect.Iterables;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
@@ -43,9 +42,6 @@ public class CSVReaderTool2 {
     }
 
     private List<Car> revert(String color) throws InterruptedException, IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-//        carMapper = new CarMapper();
-
-//        Cars.getInstance().getCarList().addAll(listOfFilteredCars);
         for (CarFromCSV csvCar: carList
         ) {
             if (csvCar.getColor().equals(color)){

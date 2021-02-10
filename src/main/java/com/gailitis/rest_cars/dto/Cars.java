@@ -19,10 +19,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.CharsetDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -50,16 +48,18 @@ public class Cars {
 
     @EventListener(ApplicationReadyEvent.class)
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public void loadDataFromCSV() throws FileNotFoundException {
+    public void loadDataFromCSV() throws FileNotFoundException, UnsupportedEncodingException {
         CsvToBean csv = new CsvToBean();
         carMapper = new CarMapper();
 
         String csvFilename = CsvConsts.DATA_FILE_PATH;
-        CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
+
+//        CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
+        CSVReader csvReader = new CSVReader(new InputStreamReader(new FileInputStream(csvFilename), "UTF-8"));
 
         csvCarList = csv.parse(setColumnMapping(), csvReader);
-        for (Object object : csvCarList) {
-            CarFromCSV carFromCSV = (CarFromCSV) object;
+        for (int i = CsvConsts.FIRST_DATA_FILE_ROW_WITH_DATA-1; i < csvCarList.size(); i=i+CsvConsts.ITERATION_OF_ROWS_WITH_DATA_PARAM) {
+            CarFromCSV carFromCSV = (CarFromCSV) csvCarList.get(i);
             System.out.println(carFromCSV);
             Car car = carMapper.fromCarFromCSVToCar(carFromCSV);
             carList.add(car);
