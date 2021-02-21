@@ -2,6 +2,7 @@ package com.gailitis.rest_cars.services;
 
 import com.gailitis.rest_cars.csv_utils.CSVReaderTool2;
 import com.gailitis.rest_cars.dto.Cars;
+import com.gailitis.rest_cars.dto.CarsDAO;
 import com.gailitis.rest_cars.dto.Carss;
 import com.gailitis.rest_cars.model.Car;
 import com.google.common.collect.Iterables;
@@ -23,12 +24,13 @@ public class CarService {
     private final CSVReaderTool2 csvReaderTool;
     private final Cars cars;
     private final Carss carss;
+    private final CarsDAO carsDAO;
 
     public List<Car> getAllCars() throws IOException {
-        return carss.getCarList();
+        return carsDAO.getCarList();
     }
 
-//    public Optional<Car> getCarById(int id) {
+    //    public Optional<Car> getCarById(int id) {
 //        return cars.getCarList().stream()
 //                .filter(car -> car.getId() == id)
 //                .findFirst();
