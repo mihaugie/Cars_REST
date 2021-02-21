@@ -20,11 +20,11 @@ import java.util.Scanner;
 
 @Component
 @Data
-public class CSVReaderApacheDAO {
+public class CSVReaderWriter {
     private static Scanner scanner;
 
-    private static final String csvFilePath = CsvConsts.DATA_FILE_SAMOCHODY_APACHE;
-    private static final String csvFilePathToSave = CsvConsts.DATA_FILE_SAMOCHODY_APACHE_SAVE;
+    private static final String csvFilePath = CsvConsts.DATA_FILE_SAMOCHODY;
+    private static final String csvFilePathToSave = CsvConsts.DATA_FILE_SAMOCHODY_SAVE_PATH;
 
     public List<Car> readCsv() throws IOException {
 
