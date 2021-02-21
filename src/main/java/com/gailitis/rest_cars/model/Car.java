@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Data
 @Builder
 public class Car implements Serializable {
-//    private static final long serialVersionUID = 1L;
 
     @Id
     @CsvBindByPosition(position=0)
@@ -27,15 +26,5 @@ public class Car implements Serializable {
         this.brand = brand;
         this.purchaseDate = purchaseDate;
         this.color = color;
-    }
-
-    @Override
-    public String toString() {
-        return "Car [" +
-                "id=" + id +
-                ", brand=" + brand +
-                ", purchaseDate=" + purchaseDate +
-                ", color=" + color +
-                ']';
     }
 }

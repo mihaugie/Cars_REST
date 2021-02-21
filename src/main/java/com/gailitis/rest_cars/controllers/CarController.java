@@ -1,13 +1,15 @@
 package com.gailitis.rest_cars.controllers;
 
+import com.gailitis.rest_cars.csv_utils.CsvConsts;
 import com.gailitis.rest_cars.model.Car;
-import com.gailitis.rest_cars.services.CarServiceDAO;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.gailitis.rest_cars.services.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class CarController {
-    private final CarServiceDAO carService;
+    private final CarService carService;
 
     @GetMapping
     public List<Car> allCars() throws IOException {
@@ -29,24 +31,32 @@ public class CarController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Car add(@RequestBody Car car) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    public Car add(@RequestBody Car car) throws IOException {
        return carService.addCar(car);
     }
 
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean remove(@PathVariable int id) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, InterruptedException {
+    public boolean remove(@PathVariable int id) throws IOException {
         return carService.removeCarById(id);
     }
 
-    @PutMapping("/update/{id}")
-    public Car update(@PathVariable int id, @RequestBody Car car) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException, InterruptedException {
+    @PutMapping("/{id}")
+    public Car update(@PathVariable int id, @RequestBody Car car) throws IOException {
         return carService.updateCar(id, car);
     }
 
-//    @PostMapping("/upload/{color}")
-//    public void appendData(@PathVariable String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-//        carService.appendData(color);
-//    }
+    @PostMapping(value = "/uploadfile/{color}")
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable String color) {
+        String fileName = file.getOriginalFilename();
+        try{
+            String uploadedFilePath = CsvConsts.FILEPATH_TO_SAVE_CARS_WITH_COLOR_FILTER + fileName;
+            file.transferTo(new File(uploadedFilePath));
+            carService.uploadDataWithColorFilter(color, uploadedFilePath);
 
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok("File uploaded succesfully");
+    }
 }
