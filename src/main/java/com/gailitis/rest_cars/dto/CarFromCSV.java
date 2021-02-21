@@ -17,14 +17,4 @@ public class CarFromCSV implements Serializable {
     private String purchaseDate;
     private String color;
 
-
-    @Override
-    public String toString() {
-        return "Car [" +
-                "id=" + id +
-                ", brand='" + brand +
-                ", purchaseDate=" + purchaseDate +
-                ", color='" + color +
-                ']';
-    }
 }
