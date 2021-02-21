@@ -29,7 +29,7 @@ public class CarController {
         return carService.getCarById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public Car add(@RequestBody Car car) throws IOException {
        return carService.addCar(car);
