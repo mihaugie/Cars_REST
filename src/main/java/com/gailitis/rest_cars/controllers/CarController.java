@@ -1,7 +1,7 @@
 package com.gailitis.rest_cars.controllers;
 
 import com.gailitis.rest_cars.model.Car;
-import com.gailitis.rest_cars.services.CarService;
+import com.gailitis.rest_cars.services.CarServiceDAO;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.RequiredArgsConstructor;
@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/cars")
 @RestController
 @RequiredArgsConstructor
 public class CarController {
-    private final CarService carService;
+    private final CarServiceDAO carService;
 
     @GetMapping
-    public List<Car> allCars(){
+    public List<Car> allCars() throws IOException {
         return carService.getAllCars();
     }
 
     @GetMapping("/{id}")
-    public Optional<Car> carById(@PathVariable int id){
+    public Car carById(@PathVariable int id) throws IOException {
         return carService.getCarById(id);
     }
 
@@ -45,9 +44,9 @@ public class CarController {
         return carService.updateCar(id, car);
     }
 
-    @PostMapping("/upload/{color}")
-    public void appendData(@PathVariable String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        carService.appendData(color);
-    }
+//    @PostMapping("/upload/{color}")
+//    public void appendData(@PathVariable String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+//        carService.appendData(color);
+//    }
 
 }

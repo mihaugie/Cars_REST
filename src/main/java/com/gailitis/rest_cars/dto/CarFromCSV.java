@@ -1,12 +1,14 @@
 package com.gailitis.rest_cars.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
-@Component
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class CarFromCSV implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -15,14 +17,4 @@ public class CarFromCSV implements Serializable {
     private String purchaseDate;
     private String color;
 
-
-    @Override
-    public String toString() {
-        return "Car [" +
-                "id=" + id +
-                ", brand='" + brand +
-                ", purchaseDate=" + purchaseDate +
-                ", color='" + color +
-                ']';
-    }
 }
