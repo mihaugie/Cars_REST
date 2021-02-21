@@ -33,6 +33,13 @@ public class Cars {
     private List<Car> carList = new ArrayList<>();
     private CarMapper carMapper;
     private List<CarFromCSV> csvCarList = new ArrayList<>();
+    CSVReaderApache csvReaderApache;
+
+
+
+
+
+
 
     @EventListener(ApplicationReadyEvent.class)
     @SuppressWarnings({"rawtypes", "unchecked"})

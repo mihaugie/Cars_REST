@@ -1,12 +1,14 @@
 package com.gailitis.rest_cars.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
-@Component
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class CarFromCSV implements Serializable {
     private static final long serialVersionUID = 1L;
 

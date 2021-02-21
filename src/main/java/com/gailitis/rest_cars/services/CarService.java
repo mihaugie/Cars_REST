@@ -2,6 +2,7 @@ package com.gailitis.rest_cars.services;
 
 import com.gailitis.rest_cars.csv_utils.CSVReaderTool2;
 import com.gailitis.rest_cars.dto.Cars;
+import com.gailitis.rest_cars.dto.Carss;
 import com.gailitis.rest_cars.model.Car;
 import com.google.common.collect.Iterables;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -22,20 +22,24 @@ public class CarService {
 
     private final CSVReaderTool2 csvReaderTool;
     private final Cars cars;
+    private final Carss carss;
 
-    public List<Car> getAllCars() {
-        return cars.getCarList();
+    public List<Car> getAllCars() throws IOException {
+        return carss.getCarList();
     }
 
-    public Optional<Car> getCarById(int id) {
-        return cars.getCarList().stream()
-                .filter(car -> car.getId() == id)
-                .findFirst();
+//    public Optional<Car> getCarById(int id) {
+//        return cars.getCarList().stream()
+//                .filter(car -> car.getId() == id)
+//                .findFirst();
+//    }
+    public Car getCarById(int id) throws IOException {
+        return carss.getCarById(id);
     }
 
     public Car addCar(Car car) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         car.setId(Iterables.getLast(cars.getCarList()).getId() + 1);
-        return cars.addCar(car);
+        return carss.addCar(car);
     }
 
     public boolean removeCarById(int id) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, InterruptedException {
@@ -43,7 +47,8 @@ public class CarService {
                 .filter(car -> car.getId() == id)
                 .findFirst().orElseThrow(() -> new NoSuchElementException("There is no such car in the system"));
 
-        return cars.removeCarById(carWithId);
+        return carss.deleteCar(id);
+//        return cars.removeCarById(carWithId);
     }
 
     public Car updateCar(int id, Car providedCar) throws CsvRequiredFieldEmptyException, IOException, CsvDataTypeMismatchException, InterruptedException {
@@ -56,7 +61,8 @@ public class CarService {
         carToBeUpdated.setPurchaseDate(providedCar.getPurchaseDate());
         carToBeUpdated.setColor(providedCar.getColor());
 
-        return cars.updateCar(cars.getCarList().indexOf(carToBeUpdated), carToBeUpdated);
+//        return cars.updateCar(cars.getCarList().indexOf(carToBeUpdated), carToBeUpdated);
+        return carss.editCar(carToBeUpdated);
     }
 
     public void appendData(String color) throws IOException, InterruptedException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {

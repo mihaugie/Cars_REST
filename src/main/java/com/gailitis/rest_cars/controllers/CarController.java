@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/cars")
 @RestController
@@ -19,12 +18,12 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping
-    public List<Car> allCars(){
+    public List<Car> allCars() throws IOException {
         return carService.getAllCars();
     }
 
     @GetMapping("/{id}")
-    public Optional<Car> carById(@PathVariable int id){
+    public Car carById(@PathVariable int id) throws IOException {
         return carService.getCarById(id);
     }
 
